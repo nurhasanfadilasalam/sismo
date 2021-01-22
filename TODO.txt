@@ -1,6 +1,0 @@
-to do list:
-
-1. Buat CRUD Product
-2. Buat CRUD Order list
-3. Buat CRUD Biaya Pengiriman
-4. Buat CRUD Outlet Mitra
