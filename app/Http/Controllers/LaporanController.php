@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Gedung;
 use App\Logstatus;
 use Ndum\Laravel\Snmp;
+use Ping;
 
 
 class LaporanController extends Controller
@@ -35,6 +36,7 @@ class LaporanController extends Controller
     {
 
         $snmp = new Snmp();
+        // use Ping;
         // $snmp1->newClient('localhost', 2, 'mycommunity');
         // $snmp->newClient('localhost', 1, 'mycommunity');
         $ipaddress = 'localhost';
@@ -78,6 +80,15 @@ class LaporanController extends Controller
         //             Logstatus::select('id')
         //             ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
         //             ->get();
+        
+        $url = 'www.google.com';
+        $health = Ping::check($url);
+
+        if($health == 200) {
+            return 'Alive!';
+        } else {
+            return 'Dead :(';
+        }
 
         // logstatus
         $datas = $data->paginate(10);

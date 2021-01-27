@@ -70,7 +70,7 @@
                                         <th>Nama Perangkat</th>
                                         <th>Gedung</th>
                                         <th>IP Perangkat</th>
-                                        <th>Date Time</th>
+                                        
                                         <th>Status</th>
                                         {{-- <th>Keterangan</th> --}}
                                     </tr>
@@ -84,7 +84,7 @@
                                         <td>{{ $data->nama_perangkat }}</td>
                                         <td>{{ $data->gedung }}</td>
                                         <td>{{ $data->ip_perangkat }}</td>
-                                        <td>{{ $data->created_at }}</td>
+                                        
                                         <td>
                                             @if($data->status == 'up')
                                             <p class="text-center"><label
