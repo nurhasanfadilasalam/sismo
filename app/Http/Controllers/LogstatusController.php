@@ -36,21 +36,10 @@ class LogstatusController extends Controller
     public function index(Request $request)
     {
         $do = $request->get('do');
-        // $filterNoInvoice = $request->get('noinvoice');
-        // $filterPartner = $request->get('partner');
         
         $data = Logstatus::orderBy('id', 'desc');
 
-        // if ($request->has('noinvoice')){
-        //     if (!empty($filterNoInvoice)) {
-        //         $data->WhereHas('partner', function (Builder $query) use ($filterPartner){                   
-        //             $query->where('name', 'like', '%'.$filterPartner.'%');                    
-        //         });
-        //         $data->orWhere('transaction_number', 'like', '%'.$filterNoInvoice.'%');
-        //     }
-        // }
-
-        // payments
+        // logstatus
         $datas = $data->paginate(10);
         
         $halaman = "logstatus";

@@ -20,16 +20,16 @@
             <div class="card-header">
                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('status_perangkat') ? 'active' : null }}" href="{{ url('status_perangkat') }}"
-                            role="tab">
+                        <a class="nav-link {{ request()->is('status_perangkat') ? 'active' : null }}"
+                            href="{{ url('status_perangkat') }}" role="tab">
                             <i class="fa fa-list mr-2"></i>Status Perangkat</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('traffic_jaringan') ? 'active' : null }}"
                             href="{{ url('traffic_jaringan') }}" role="tab">
-                            <i class="fas fa-shipping-fast"></i>Traffic Jaringan</a>
+                            <i class="far fa-file-alt"></i>Traffic Jaringan</a>
                     </li>
-                    
+
                 </ul>
 
                 <!-- tab panel -->
@@ -39,12 +39,13 @@
 
 
 
+
             <!-- body -->
             <div class="card-body">
                 <div class="tab-content">
 
-                    <div class="tab-pane {{ request()->is('status_perangkat') ? 'active' : null }}" id="{{!! url('status_perangkat') !!}}"
-                        role="tabpanel"></div>
+                    <div class="tab-pane {{ request()->is('status_perangkat') ? 'active' : null }}"
+                        id="{{!! url('status_perangkat') !!}}" role="tabpanel"></div>
 
                     <!-- <h1>Order List</h1> -->
 
@@ -52,12 +53,7 @@
                     <!-- column     -->
 
 
-
-
-
                 </div>
-
-
 
 
             </div>
@@ -66,27 +62,51 @@
             <div class="content">
                 <div class="card">
                     <div class="card-body">
-                        <!-- MULAI TOMBOL TAMBAH -->
-                        <h1>{{ $result1 }}</h1>
-                        <!-- <a href="javascript:void(0)" class="btn btn-info" id="tombol-tambah">Tambah PEGAWAI</a> -->
-                        <br><br>
-                        <!-- AKHIR TOMBOL -->
-                        <!-- MULAI TABLE -->
-                        <table class="table table-striped table-bordered table-sm" id="table_list_order">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Order ID</th>
-                                    <th>Nama Customer</th>
-                                    <th>Order Status</th>
-                                    <th>Ongkir</th>
-                                    <th>Status Pembayaran</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <!-- AKHIR TABLE -->
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Nama Perangkat</th>
+                                        <th>Gedung</th>
+                                        <th>IP Perangkat</th>
+                                        <th>Date Time</th>
+                                        <th>Status</th>
+                                        {{-- <th>Keterangan</th> --}}
+                                    </tr>
+                                </thead>
 
+                                <tbody>
+                                    @foreach($datas as $key => $data)
+                                    <tr>
+                                        <td>{{ $datas->firstItem() + $key }}</td>
+                                        
+                                        <td>{{ $data->nama_perangkat }}</td>
+                                        <td>{{ $data->gedung }}</td>
+                                        <td>{{ $data->ip_perangkat }}</td>
+                                        <td>{{ $data->created_at }}</td>
+                                        <td>
+                                            @if($data->status == 'up')
+                                            <p class="text-center"><label
+                                                    class="badge badge-success">{{strtoupper($data->status)}}</label>
+                                            </p>
+                                            @elseif($data->status == 'down')
+                                            <p class="text-center"><label
+                                                    class="badge badge-danger">{{strtoupper($data->status)}}</label></p>
+                                            @endif
+
+                                        </td>
+                                        {{-- <td>{{ $data->keterangan }} </td> --}}
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer text-right">
+                        {{ $datas->appends(Request::all())->links() }}
                     </div>
                 </div>
             </div>
@@ -223,7 +243,7 @@
 
 
         <!-- JAVASCRIPT -->
-       
+
 
         <!-- JAVASCRIPT -->
 

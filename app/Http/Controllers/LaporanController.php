@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Orderlist;
+use App\Gedung;
+use App\Logstatus;
 use Ndum\Laravel\Snmp;
 
 
@@ -21,23 +22,14 @@ class LaporanController extends Controller
 
         // return view('home.orderin');
         // return view('orderin', ['halaman' => $halaman ]);
-
-        $list_orderlist = Orderlist::all();
-        if($request->ajax()){
-            return datatables()->of($list_orderlist)
-                        ->addColumn('action', function($data){
-                            $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-info btn-sm edit-post"><i class="far fa-edit"></i> Edit</a>';
-                            $button .= '&nbsp;&nbsp;';
-                            $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</button>';     
-                            return $button;
-                        })
-                        ->rawColumns(['action'])
-                        ->addIndexColumn()
-                        ->make(true);
-        }
-
-        return view('laporan.status_perangkat', ['halaman' => $halaman]);
+        $data = Logstatus::orderBy('id', 'desc');
+        
+        
+         // logstatus
+         $datas = $data->paginate(10);
+        return view('laporan.status_perangkat', ['datas' => $datas, 'halaman' => $halaman]);
     }
+
 
     public function status_perangkat()
     {
@@ -73,11 +65,28 @@ class LaporanController extends Controller
         // }
 
         // dd($oids);
+
+        $data = Logstatus::orderBy('id', 'desc');
+        // $data = Logstatus::orderBy('id', 'desc')
+        //         ->leftJoin('gedung', 'users.id', '=', 'posts.user_id');
+
+        // $data = Logstatus::select(\DB::raw("COUNT(*) as count"))
+        //             ->whereYear('created_at', date('Y'))
+        //             ->groupBy(\DB::raw("Month(created_at)"))
+                   
+        
+        //             Logstatus::select('id')
+        //             ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
+        //             ->get();
+
+        // logstatus
+        $datas = $data->paginate(10);
+
         //  untuk active halaman
          $halaman = "laporan";
         
         // return view('home.orderin');
-        return view('laporan.status_perangkat', ['halaman' => $halaman , 'result1' => $result1]);
+        return view('laporan.status_perangkat', ['halaman' => $halaman , 'result1' => $result1, 'datas' => $datas,]);
 
         
 

@@ -23,6 +23,9 @@
   <link rel="stylesheet" href="{{ asset('css/components.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/spinner/jquery-spinner.min.css') }}">
 
+    	<!-- Chart JS -->
+	<script src="{{ asset('js/chart.js/chart.min.js') }}"></script>
+
   <!-- CSS Custum -->
   <style>
     .jquery-spinner-wrap {
@@ -161,7 +164,7 @@
       </div>
 
       <footer class="main-footer">
-        <div class="footer-left">Copyright &copy; 2020 <div class="bullet"></div> Allright reserved</div>
+        <div class="footer-left">Copyright &copy; 2021 <div class="bullet"></div> Allright reserved</div>
         <div class="footer-right">Beta Version 1.0.0</div>
       </footer>
     </div>
@@ -178,6 +181,7 @@
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
   <!-- <script src="{{ asset('js/stisla.js') }}"></script> -->
   <!-- JS Libraies -->
+
 
 
   <!-- Template JS File -->

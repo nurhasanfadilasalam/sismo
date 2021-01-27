@@ -14,17 +14,30 @@ class DemoSeeder extends Seeder
     public function run()
     {
         $demo = new \App\User;
-        $demo->username = "demo";
+        $demo->username = "super";
         $demo->name = "Superadmin Demo";
-        $demo->email = "demo@demo.com";
+        $demo->email = "super@demo.com";
         $demo->roles = json_encode(["OWNER", "ADMIN"]);
-        $demo->password = \Hash::make("demo12345");
+        $demo->password = \Hash::make("mia12345");
         $demo->avatar = "";
         $demo->phone = "08123456789";
         $demo->address = "Pekanbaru, Riau";
         $demo->api_token= "asnnd12e1124141onon1e";
         $demo->device_token= "asnnd12e1234141onon1e";
         $demo->save();
+
+        // $demo = new \App\User;
+        // $demo->username = "demo";
+        // $demo->name = "Superadmin Demo";
+        // $demo->email = "demo@demo.com";
+        // $demo->roles = json_encode(["OWNER", "ADMIN"]);
+        // $demo->password = \Hash::make("demo12345");
+        // $demo->avatar = "";
+        // $demo->phone = "08123456789";
+        // $demo->address = "Pekanbaru, Riau";
+        // $demo->api_token= "asnnd12e1124141onon1e";
+        // $demo->device_token= "asnnd12e1234141onon1e";
+        // $demo->save();
 
         $demo = new \App\User;
         $demo->username = "owner";

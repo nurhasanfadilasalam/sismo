@@ -27,7 +27,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('traffic_jaringan') ? 'active' : null }}"
-                            href="{{ url('traffic_jaringan') }}" role="tab"><i class="fas fa-shipping-fast"></i>Traffic Jaringan</a>
+                            href="{{ url('traffic_jaringan') }}" role="tab"><i class="far fa-file-alt"></i>Traffic Jaringan</a>
                     </li>
                     
                 </ul>
