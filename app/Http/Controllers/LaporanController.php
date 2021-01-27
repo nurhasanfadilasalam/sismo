@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Gedung;
 use App\Logstatus;
 use Ndum\Laravel\Snmp;
-use Ping;
+// use Ping;
 
 
 class LaporanController extends Controller
@@ -81,14 +81,10 @@ class LaporanController extends Controller
         //             ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
         //             ->get();
         
-        $url = 'www.google.com';
-        $health = Ping::check($url);
 
-        if($health == 200) {
-            return 'Alive!';
-        } else {
-            return 'Dead :(';
-        }
+        $url = 'www.google.com';
+        
+       
 
         // logstatus
         $datas = $data->paginate(10);
@@ -97,7 +93,7 @@ class LaporanController extends Controller
          $halaman = "laporan";
         
         // return view('home.orderin');
-        return view('laporan.status_perangkat', ['halaman' => $halaman , 'result1' => $result1, 'datas' => $datas,]);
+        return view('laporan.status_perangkat', ['halaman' => $halaman , 'result1' => $result1, 'datas' => $datas]);
 
         
 
