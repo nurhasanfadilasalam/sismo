@@ -41,24 +41,24 @@ class User extends Authenticatable
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 
-    public function tracks() 
+    public function gedung() 
     {
-        return $this->hasMany('App\InventoriesTracks');
+        return $this->hasMany('App\Gedung', 'id', 'created_by');
     }
 
-    public function purchases() 
+    public function traffic() 
     {
-        return $this->hasMany('App\Purchases', 'id', 'created_by');
+        return $this->hasMany('App\Traffic', 'id', 'created_by');
     }
 
-    public function shippings() 
+    public function logstatus() 
     {
-        return $this->hasMany('App\Shippings', 'id', 'created_by');
+        return $this->hasMany('App\Logstatus', 'id', 'created_by');
     }
 
-    public function shippingsDetails() 
+    public function perangkat() 
     {
-        return $this->hasMany('App\ShippingsDetails', 'id', 'proccess_by');
+        return $this->hasMany('App\ShippingsDetails', 'id', 'created_by');
     }
 
     public function spend() 

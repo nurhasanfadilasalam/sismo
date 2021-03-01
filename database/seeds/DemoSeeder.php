@@ -40,11 +40,11 @@ class DemoSeeder extends Seeder
         // $demo->save();
 
         $demo = new \App\User;
-        $demo->username = "owner";
-        $demo->name = "Owner";
-        $demo->email = "owner@demo.com";
+        $demo->username = "admin";
+        $demo->name = "Admin 1";
+        $demo->email = "admin@demo.com";
         $demo->roles = json_encode(["OWNER"]);
-        $demo->password = \Hash::make("owner123");
+        $demo->password = \Hash::make("admin12345");
         $demo->avatar = "";
         $demo->phone = "08123456789";
         $demo->address = "Pekanbaru, Riau";
@@ -80,6 +80,54 @@ class DemoSeeder extends Seeder
         $demo->created_by = '1';
         $demo->save();
 
+
+
+        $demo = new \App\Traffic;
+        $demo->perangkat_id = "2";
+        $demo->nilai = "19";
+        $demo->keterangan = "traffic";
+        $demo->created_by = '1';
+        $demo->save();
+
+
+        $demo = new \App\Traffic;
+        $demo->perangkat_id = "2";
+        $demo->nilai = "25";
+        $demo->keterangan = "traffic";
+        $demo->created_by = '1';
+        $demo->save();
+
+
+        $demo = new \App\Traffic;
+        $demo->perangkat_id = "2";
+        $demo->nilai = "18";
+        $demo->keterangan = "traffic";
+        $demo->created_by = '1';
+        $demo->save();
+
+
+        $demo = new \App\Traffic;
+        $demo->perangkat_id = "2";
+        $demo->nilai = "30";
+        $demo->keterangan = "traffic";
+        $demo->created_by = '1';
+        $demo->save();
+
+        $demo = new \App\Traffic;
+        $demo->perangkat_id = "2";
+        $demo->nilai = "20";
+        $demo->keterangan = "traffic";
+        $demo->created_by = '1';
+        $demo->save();
+
+
+
+        $demo = new \App\Traffic;
+        $demo->perangkat_id = "2";
+        $demo->nilai = "40";
+        $demo->keterangan = "traffic";
+        $demo->created_by = '1';
+        $demo->save();
         
 
     }

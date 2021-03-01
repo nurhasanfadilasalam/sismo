@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Partners;
-use App\Inventories;
-use App\InventoriesStocks;
-use App\Purchases;
-use App\PurchasesDetail;
-use App\Sales;
-use App\Brokens;
+use App\Gedung;
+use App\Perangkat;
+use App\Traffic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Ping;
 
 class HomeController extends Controller
 {
@@ -35,32 +32,64 @@ class HomeController extends Controller
         //untuk active halaman
         $halaman = "dashboard";
 
-        // $sumPartners = Partners::count();
+        //count live server up or die
+        $dataServers = Perangkat::pluck('ip_perangkat');
+        foreach($dataServers as $dataServer) {
+            $diagnosa[] = Ping::check($dataServer); 
+
+            $qtyUp = 0;
+            $qtyDown = 0;
+            foreach($diagnosa as $check){
+                if ($check == 200){
+                    $qtyUp += 1;
+                }elseif($check != 200){
+                    $qtyDown += 1;
+                    
+                }
+            }
+            
+        }
         
-        // $sumStocks = InventoriesStocks::where('expired', '>', date('Y-m-d'))->sum('stock');
+        $upServer = $qtyUp;
+        $downServer= $qtyDown;
+      
+        $datajumlah = Perangkat::count('id');
 
-        // $sumSales = DB::table('sales')
-        //     ->join('sales_details', 'sales_details.sales_id', '=', 'sales.id')
-        //     ->where('date_select', '=', date('Y-m-d'))
-        //     ->sum('subtotal');
+        //function grapik
+        $data_traffic1 = Traffic::select('nilai','created_at')
+                        ->where('keterangan', 'inoctet')
+                        ->orderBy('created_at','desc')->take(60)->get();
+        $reversed1 = $data_traffic1->reverse();
+        $new1    = $reversed1->all();
 
-        // $sumBrokens = DB::table('brokens')
-        //     ->join('brokens_details', 'brokens_details.brokens_id', '=', 'brokens.id')
-        //     ->where('date_select', '=', date('Y-m-d'))
-        //     ->sum('broken');
+        $data_traffic2 = Traffic::select('nilai','created_at')
+                        ->where('keterangan', 'outoctet')
+                        ->orderBy('created_at','desc')->take(60)->get();
+        $reversed2 = $data_traffic2->reverse();
+        $new2    = $reversed2->all();
+        
+        $max_date = Traffic::max('created_at');
+        $max = date('Y-m-d H:i:s',strtotime($max_date));
+        $now = date('Y-m-d H:i:s');
+        $dif = strtotime($now)-strtotime($max);
+        $hours = floor($dif / (60 * 60));
+        $seconds = $dif - $hours * (60 * 60);
 
-        // $sumPurchases = DB::table('purchases')
-        //     ->join('purchases_detail', 'purchases_detail.purchases_id', '=', 'purchases.id')
-        //     ->where('date_select', '=', date('Y-m-d'))
-        //     ->sum('subtotal');
 
-        // $lastSales = Sales::orderBy('id', 'desc')
-        //     ->where('date_select', '=', date('Y-m-d'))
-        //     ->limit(5)
-        //     ->get();
-
-        // return view('home.index');
-        return view('laporan.index', ['halaman' => $halaman ]);
+        return view('laporan.index', [
+            'halaman' => $halaman, 
+            'datajumlah'=> $datajumlah, 
+            'upServer' =>$upServer, 
+            'downServer' =>$downServer,
+            'dataServers' =>$dataServers,
+            
+            'traffic1' => $new1,
+            'traffic2' => $new2,
+            'traffics1' => $new1,
+            'traffics2' => $new2,
+            'selisih' => $seconds,
+            'updatewaktu' =>$max
+            ]);
     }
 
 

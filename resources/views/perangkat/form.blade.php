@@ -43,11 +43,24 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="name">Gedung</label>
+                        <label class="form-label" for="name">Gedung </label>
                         @error('gedung')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
-                        <input class="form-control @error('gedung') is-invalid @enderror" placeholder="Gedung" type="text" name="gedung" id="gedung" value="@if(!empty($data)){{ $data->gedung }}@endif" required/>
+                        <select name="gedung" id="gedung" class="form-control" onchange="this.form.value" required>
+                            @foreach ($listGedung as $gedung)
+                            {{-- <option @if($gedung == '') @endif value="">-- Pilih Gedung --</option> --}}
+                            <option> 
+                                {{-- @if($gedung != null) --}}
+                                {{ $gedung }}
+                                {{-- @endif --}}
+                            </option> 
+                            @endforeach
+                        </select>
+                        {{-- <input class="form-control @error('gedung') is-invalid @enderror" placeholder="Gedung" type="text" name="gedung" id="gedung" value="@if(!empty($data)){{ $data->gedung }}@endif" required/> --}}
+                        <br>
+                        <a href="{{ route('gedung.create') }}" class="btn btn-info"><i class="fas fa-plus"></i> Tambah Data Gedung</a>
+                        
                     </div>
 
                     

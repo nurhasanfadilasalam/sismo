@@ -1,5 +1,6 @@
 @extends('layouts.app') @section('title', '') @section('content')
 @section('content')
+@include('sweet::alert')
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -29,88 +30,166 @@
                             href="{{ url('traffic_jaringan') }}" role="tab">
                             <i class="far fa-file-alt"></i>Traffic Jaringan</a>
                     </li>
-
                 </ul>
-
                 <!-- tab panel -->
-
-
             </div>
-
-
-
 
             <!-- body -->
-            <div class="card-body">
-                <div class="tab-content">
-
-                    <div class="tab-pane {{ request()->is('status_perangkat') ? 'active' : null }}"
-                        id="{{!! url('status_perangkat') !!}}" role="tabpanel"></div>
-
-                    <!-- <h1>Order List</h1> -->
-
-
-                    <!-- column     -->
-                    {{-- <h1>{{ $result1 }}</h1> --}}
-                    {{-- <h1>{{ $health }}</h1> --}}
-
-                </div>
-
-
+            {{-- <div class="card-body"> --}}
+            <div class="tab-content">
+                <div class="tab-pane {{ request()->is('status_perangkat') ? 'active' : null }}"
+                    id="{{!! url('status_perangkat') !!}}" role="tabpanel"></div>
             </div>
+
+            {{-- </div> --}}
 
             <!-- MULAI CONTAINER -->
-            <div class="content">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Nama Perangkat</th>
-                                        <th>Gedung</th>
-                                        <th>IP Perangkat</th>
-                                        
-                                        <th>Status</th>
-                                        {{-- <th>Keterangan</th> --}}
-                                    </tr>
-                                </thead>
+            {{-- <div class="content"> --}}
+                {{-- <div class="card"> --}}
+                {{-- head --}}
+                <div class="card-header">
+                    {{-- <h4>
+                            Jumlah Server : {{ $datajumlah}}
+                    </h4> --}}
 
-                                <tbody>
-                                    @foreach($datas as $key => $data)
-                                    <tr>
-                                        <td>{{ $datas->firstItem() + $key }}</td>
-                                        
-                                        <td>{{ $data->nama_perangkat }}</td>
-                                        <td>{{ $data->gedung }}</td>
-                                        <td>{{ $data->ip_perangkat }}</td>
-                                        
-                                        <td>
-                                            @if($data->status == 'up')
-                                            <p class="text-center"><label
-                                                    class="badge badge-success">{{strtoupper($data->status)}}</label>
-                                            </p>
-                                            @elseif($data->status == 'down')
-                                            <p class="text-center"><label
-                                                    class="badge badge-danger">{{strtoupper($data->status)}}</label></p>
-                                            @endif
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
 
-                                        </td>
-                                        {{-- <td>{{ $data->keterangan }} </td> --}}
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center pb-2">
+                                            <div class="dot-indicator bg-danger mr-2"></div>
+                                            <p class="mb-0">Total Server</p>
+                                        </div>
+                                        <h4 class="font-weight-semibold">{{ $datajumlah}}</h4>
+                                        <div class="progress progress-md">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center pb-2">
+                                            <div class="dot-indicator bg-danger mr-2"></div>
+                                            <p class="mb-0">Perangkat Status Down</p>
+                                        </div>
+                                        <h4 class="font-weight-semibold">
+                                            {{ $downServer }}
+                                        </h4>
+                                        <div class="progress progress-md">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{($datajumlah*10)-($upServer*10) }}%"
+                                                aria-valuenow="{{($datajumlah*10)-($downServer*10) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center pb-2">
+                                            <div class="dot-indicator bg-success mr-2"></div>
+                                            <p class="mb-0">Perangkat Status Up</p>
+                                        </div>
+                                        <h4 class="font-weight-semibold">
+                                            {{ $upServer }}
+                                        </h4>
+                                        <div class="progress progress-md">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{($datajumlah*10)-($downServer*10) }}%"
+                                                aria-valuenow="{{($datajumlah*10)-($upServer*10) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
-
                     </div>
 
-                    <div class="card-footer text-right">
-                        {{ $datas->appends(Request::all())->links() }}
-                    </div>
                 </div>
-            </div>
+                {{-- body --}}
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>SSID</th>
+                                    <th>Gedung</th>
+                                    <th>Date Time </th>
+                                    <th>IP Address</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach($datas as $key => $data)
+                                <tr>
+                                    <td>{{ $datas->firstItem() + $key }}</td>
+                                    <td>{{ $data->nama_perangkat }}</td>
+                                    <td>{{ $data->gedung }}</td>
+                                    <td>{{ $data->updated_at }}</td>
+                                    <td>{{ $data->ip_perangkat }}</td>
+                                    <td>
+
+                                        <center>
+                                            @if (Ping::check($data->ip_perangkat) == 200)
+                                            {{-- <audio autoplay>
+                                                <source src='https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3' type='audio/mp3'>
+                                            </audio> --}}
+
+                                            <i class="fa fa-caret-up"
+                                                style="font-size:21px; color:rgb(111, 255, 0)"></i>
+
+                                            <p class="text-center">
+                                                {{-- <i class="fa fa-caret-up" style="font-size:26px; color:green"></i> --}}
+                                                {{-- <br> --}}
+                                                {{-- <label class="badge badge-success">LIVE</label> --}}
+                                                <label style="color:rgb(97, 221, 2)">UP</label>
+                                            </p>
+
+                                            @else
+                                            
+                                            <audio autoplay>
+                                                <source
+                                                    src='https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3'
+                                                    type='audio/mp3'>
+                                            </audio>
+                                            
+
+                                            <i class="fa fa-caret-down" style="font-size:21px; color:red"></i>
+
+                                            <p class="text-center">
+                                                {{-- <i class="fa fa-caret-down" style="font-size:26px; color:red"></i> --}}
+                                                {{-- <br> --}}
+                                                <label style="color:red">DOWN</label>
+                                            </p>
+                                            {{-- <p class="text-center"><label class="badge badge-danger">DIE</label></p> --}}
+
+                                            @endif
+                                        </center>
+
+                                    </td>
+                                    <td>
+
+                                        <center>
+                                            <a href="{{ route('laporan.show', [$data->id]) }}"
+                                                class="btn btn-info text-white btn-sm" title="Detail">
+                                                <i class="fas fa-poll-h"></i></a>
+                                            <p class="text-center">Detail</p>
+                                        </center>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="card-footer text-right">
+                    {{ $datas->appends(Request::all())->links() }}
+                </div>
+                {{-- </div> --}}
+            {{-- </div> --}}
             <!-- AKHIR CONTAINER -->
 
 
@@ -258,4 +337,19 @@
 </div>
 
 </div>
+
+<script>
+    function autoRefreshPage() {
+        window.location = window.location.href;
+        }
+        setInterval('autoRefreshPage()', 20000);
+</script>
+
+<script>
+    function playSound(url) {
+        var audio = new Audio(url);
+        // const audio = new Audio(url);
+        audio.play();
+    }
+</script>
 @endsection

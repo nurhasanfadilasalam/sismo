@@ -168,6 +168,8 @@ return [
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Karlmonson\Ping\PingServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         // Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
@@ -232,6 +234,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Ping' => Karlmonson\Ping\Facades\Ping::class,
+        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
         // 'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],

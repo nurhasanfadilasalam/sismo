@@ -23,8 +23,12 @@
   <link rel="stylesheet" href="{{ asset('css/components.css') }}">
   <link rel="stylesheet" href="{{ asset('vendor/spinner/jquery-spinner.min.css') }}">
 
-    	<!-- Chart JS -->
-	<script src="{{ asset('js/chart.js/chart.min.js') }}"></script>
+  <!-- Chart JS -->
+  <script src="{{ asset('js/chart.js/chart.min.js') }}"></script>
+  
+ {{-- sweatlaert uxweb --}}
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
 
   <!-- CSS Custum -->
   <style>
@@ -81,7 +85,8 @@
   </style>
   
   <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-  <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
+
+ <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
 </head>
 
 <body id="mainContainer" class="@yield('bodyclass')">
@@ -159,10 +164,10 @@
       @show
 
       <!-- Main Content -->
-      <div class="main-content">
+      <div class="main-content">  
         @yield('content')
       </div>
-
+    
       <footer class="main-footer">
         <div class="footer-left">Copyright &copy; 2021 <div class="bullet"></div> Allright reserved</div>
         <div class="footer-right">Beta Version 1.0.0</div>
@@ -183,7 +188,7 @@
   <!-- JS Libraies -->
 
 
-
+  
   <!-- Template JS File -->
   <script src="{{ asset('js/scripts.js') }}"></script>
   <script src="{{ asset('js/custom.js') }}"></script>

@@ -56,7 +56,7 @@ class ClientProtocolHandler
         'port' => 161,
         'host' => 'localhost',
         'user' => null,
-        'community' => 'mycommunity',
+        'community' => 'public',
         'udp_retry' => 5,
         'timeout_connect' => 5,
         'timeout_read' => 10,

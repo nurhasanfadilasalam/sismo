@@ -17,9 +17,10 @@
                         <div class="buttons">
                             {{-- <a href="{{ url('perangkat') }}" class="btn btn-success"><i
                                 class="fas fa-angle-double-left"></i></a> --}}
+                                
                             <a href="{{ url('perangkat') }}" class="btn btn-success"><i class="fas fa-sync-alt"></i>
                                 Reload</a>
-                            <a href="{{ url('perangkat/create/puskom') }}" class="btn btn-info"><i
+                            <a href="{{ url('perangkat/create') }}" class="btn btn-info"><i
                                     class="fas fa-plus"></i> Tambah Data</a>
                         </div>
                         @if (session('status'))

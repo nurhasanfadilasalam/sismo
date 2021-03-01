@@ -26,8 +26,12 @@ Route::get('/products', 'ProductController@index');
 
 Route::get('/traffic_jaringan', 'TaskController@traffic_jaringan')->name('laporan.traffic_jaringan');
 
-Route::resource('status_perangkat','LaporanController@status_perangkat')->except(['show','update']);
+// Route::resource('status_perangkat', 'LaporanController');
+// Route::resource('status_perangkat','LaporanController@status_perangkat')->except(['show','update']);
 Route::get('/status_perangkat', 'LaporanController@status_perangkat')->name('laporan.status_perangkat');
+// Route::get('monitoring/grafik/suhu', 'DashboardController@grafikSuhu')->name('monitoring.grafik.suhu');
+// Route::get('/laporan/show', 'LaporanController@grafik_traffic')->name('laporan.show');
+Route::resource('laporan', 'LaporanController');
 
 // services general ajax
 Route::prefix('services')->group(function() {
@@ -43,22 +47,18 @@ Route::prefix('services')->group(function() {
 
 // masters
 Route::resource('perangkat', 'PerangkatController');
-Route::prefix('perangkat')->group(function(){
-    Route::get('create/{type}', 'PerangkatController@create');
-    Route::get('{id}/edit', 'PerangkatController@edit');
-});
+// Route::prefix('perangkat')->group(function(){
+//     Route::get('create/{type}', 'PerangkatController@create');
+//     Route::get('{id}/edit', 'PerangkatController@edit');
+// });
 
 Route::resource('users', 'UserController');
 Route::resource('gedung', 'GedungController');
-Route::resource('purchases', 'PurchasesController');
  
 Route::resource('routes', 'RoutesController');
 // Route::resource('salesdirects', 'SalesDirectsController');
 
 
-//kelola spend
-Route::resource('spend', 'SpendController');
-Route::get('laporan/spend', 'SpendController@laporan');
 // logStatus
 
 
@@ -72,9 +72,6 @@ Route::prefix('logstatus')->group(function(){
 //preorder
 Route::resource('preorder', 'PreordersController');
 
-// shippings
-Route::post('/shippings/proccess', 'ShippingsController@proccess')->name('shippings.proccess');
-Route::resource('shippings', 'ShippingsController');
 
 // reports
 Route::prefix('reports')->group(function(){
@@ -86,6 +83,7 @@ Route::prefix('reports')->group(function(){
     
 });
 Route::resource('reports', 'ReportsController');
+
 
 //Clear Cache facade value:
 Route::get('/clear-cache', function() {

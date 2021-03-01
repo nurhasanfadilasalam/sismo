@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "consoletvs/charts": "^6.5",
         "fideloper/proxy": "^4.0",
         "freedsx/snmp": "^0.4.0",
         "karlmonson/laravel-ping": "^1.0",

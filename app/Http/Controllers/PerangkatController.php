@@ -27,16 +27,11 @@ class PerangkatController extends Controller
     public function index(Request $request)
     { 
        
-        
-        $data = Perangkat::orderBy('id', 'asc');
-        
-    
-    
-            $datas = $data->paginate(10);
-            $gedung = Gedung::all();
-            $halaman = "parameter";
+        $data = Perangkat::orderBy('id', 'desc');
+        $datas = $data->paginate(10);
+        $halaman = "parameter";
             
-            return view("perangkat.index", [ 'datas' => $datas, 'halaman' => $halaman ]); 
+        return view("perangkat.index", [ 'datas' => $datas, 'halaman' => $halaman ]); 
     }
 
     /**
@@ -49,13 +44,16 @@ class PerangkatController extends Controller
     {
 
         $newData = new Perangkat;
+        $listGedung = array();
+        $listGedung = Gedung::pluck('nama_gedung');
+
+
+        // dd($listGedung);
         $halaman = "parameter";   
-        return view("perangkat.form",compact('halaman'));
+        return view("perangkat.form",compact('halaman', 'listGedung'));
 
     
     }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -68,10 +66,11 @@ class PerangkatController extends Controller
         $newData = new Perangkat; 
         // $gedung = $request->get('gedung');
 
+
         $newData->nama_perangkat = $request->get('nama_perangkat');
         $newData->ip_perangkat = $request->get('ip_perangkat');
         $newData->gedung = $request->get('gedung');
-        $newData->keterangan = $request->get('keterangan');
+        // $newData->keterangan = $request->get('keterangan');
         $newData->created_by = \Auth::user()->id;
 
         $newData->save();
@@ -121,6 +120,7 @@ class PerangkatController extends Controller
 
         $data->nama_perangkat = $request->get('nama_perangkat');
         $data->ip_perangkat = $request->get('ip_perangkat');
+        $data->gedung = $request->get('gedung');
         $data->updated_by = \Auth::user()->id;
 
         $data->save();

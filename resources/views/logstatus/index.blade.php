@@ -54,21 +54,55 @@
                                     @foreach($datas as $key => $data)
                                     <tr>
                                         <td>{{ $datas->firstItem() + $key }}</td>
-                                        <td>{{ $data->created_at }}</td>
+                                        <td>{{ $data->updated_at }}</td>
                                         <td>{{ $data->nama_perangkat }}</td>
                                         <td>{{ $data->ip_perangkat }}</td>
-                                        <td>
-                                            @if($data->status == 'up')
+                                        {{-- <td>
+                                            @if($data->keterangan == 'UP')
                                             <p class="text-center"><label
-                                                    class="badge badge-success">{{strtoupper($data->status)}}</label>
+                                                    class="badge badge-success">{{strtoupper($data->keterangan)}}</label>
                                             </p>
-                                            @elseif($data->status == 'down')
+                                            @elseif($data->keterangan == 'DOWN')
                                             <p class="text-center"><label
-                                                    class="badge badge-danger">{{strtoupper($data->status)}}</label></p>
+                                                    class="badge badge-danger">{{strtoupper($data->keterangan)}}</label></p>
                                             @endif
 
+                                        </td> --}}
+
+                                        {{-- $health_status = Ping::check($dt);
+                                        if ($health_status == 200) {
+                                        return 'UP';
+                                        // dd($health);
+                                        } else {
+                                        return 'DOWN';
+                                        } --}}
+
+                                        {{-- <td>
+                                            {{ Ping::check($data->ip_perangkat) }}
+                                            @if('{{ Ping::check($data->ip_perangkat) }}' == 200 )
+                                            <p class="text-center"><label
+                                                    class="badge badge-success">UP</label>
+                                            </p>
+                                            @elseif('{{ Ping::check($data->ip_perangkat)  }}' != 200 )
+                                            <p class="text-center"><label
+                                                    class="badge badge-danger">DOWN</label></p>
+                                            @endif
+                                        </td> --}}
+
+                                        <td>
+                                            @if (Ping::check($data->ip_perangkat) == 200)
+                                            <p class="text-center"><label
+                                                class="badge badge-success">UP</label></p>
+                                            </p>
+                                            @else
+                                            <p class="text-center"><label
+                                                class="badge badge-danger">DOWN</label></p>
+                                            </p>
+                                            @endif
+                                        
                                         </td>
-                                        <td>{{ $data->keterangan }} </td>
+
+                                        <td>{{ $data->gedung }} </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
