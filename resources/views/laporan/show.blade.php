@@ -17,40 +17,105 @@
 
                     <div class="card-header">
                         <div>
-                            
+
                             <a href="{{ url('status_perangkat') }}" class="btn btn-danger">
                                 < Back</a> </p> &ensp; <h3>
                         </div>
-                                
+
                     </div>
                     <div class="card-body">
                         <div class="row">
 
 
                             {{-- left --}}
-                            <div class=col-md-6>
+                            <div class=col-md-8>
                                 <div class="card">
 
                                     <div class="card-header">
-                                        <p class="pull-right">
-                                           
-                                                    {{$laporan->nama_perangkat}}
-                                                    
-                                                    <br>
-                                                    Gedung: {{$laporan->gedung}}
-                                                    <br>
-                                                    IP: {{$laporan->ip_perangkat}}
-                                                    </h3>
+
+                                        <div class="col-md-8">
+
+
+                                            {{$laporan->nama_perangkat}}
+
+                                            <br>
+                                            Gedung: {{$laporan->gedung}}
+                                            <br>
+                                            IP: {{$laporan->ip_perangkat}}
+                                            </h3>
+
+                                            <br>
+                                            <center>
+                                                @if (Ping::check($laporan->ip_perangkat) == 200)
+                                                {{-- <audio autoplay>
+                                                            <source src='https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3' type='audio/mp3'>
+                                                        </audio> --}}
+
+                                                <i class="fa fa-caret-up"
+                                                    style="font-size:21px; color:rgb(111, 255, 0)"></i>
+
+                                                <p class="text-center">
+                                                    {{-- <i class="fa fa-caret-up" style="font-size:26px; color:green"></i> --}}
+                                                    {{-- <br> --}}
+                                                    {{-- <label class="badge badge-success">LIVE</label> --}}
+                                                    <label style="color:rgb(97, 221, 2)">UP</label>
+                                                </p>
+
+                                                @else
+
+                                                <audio autoplay>
+                                                    <source
+                                                        src='https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3'
+                                                        type='audio/mp3'>
+                                                </audio>
+
+
+                                                <i class="fa fa-caret-down" style="font-size:21px; color:red"></i>
+
+                                                <p class="text-center">
+                                                    {{-- <i class="fa fa-caret-down" style="font-size:26px; color:red"></i> --}}
+                                                    {{-- <br> --}}
+                                                    <label style="color:red">DOWN</label>
+                                                </p>
+                                                {{-- <p class="text-center"><label class="badge badge-danger">DIE</label></p> --}}
+
+                                                @endif
+                                            </center>
+
+
+                                        </div>
+
+
+
                                     </div>
 
                                     <div class="card-body">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
 
-
-                                            <div class="chart-container">
+                                            {{-- grafik --}}
+                                            {{-- <div class="chart-container">
                                                 <canvas id="lineChart"></canvas>
-                                            </div>
+                                            </div> --}}
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SSID</th>
+                                                            <th>Transmitter (Byte)</th>
+                                                            <th>Receiver (Byte)</th>
 
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <td>{{$laporan->nama_perangkat}}</td>
+                                                        <td>{{  $data_traffic_last_inoctet->nilai }}</td>
+                                                        <td>{{  $data_traffic_last_outoctet->nilai }}</td>
+
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
 
                                         </div>
                                     </div>
@@ -111,7 +176,7 @@
                     @foreach($suhuu as $nilai)
                     @php
                     $nilai = $nilai['nilai'];
-                    
+
                     @endphp '{{"$nilai"}}',
                     @endforeach
 

@@ -28,10 +28,14 @@ Route::get('/traffic_jaringan', 'TaskController@traffic_jaringan')->name('lapora
 
 // Route::resource('status_perangkat', 'LaporanController');
 // Route::resource('status_perangkat','LaporanController@status_perangkat')->except(['show','update']);
+Route::resource('laporan', 'LaporanController');
 Route::get('/status_perangkat', 'LaporanController@status_perangkat')->name('laporan.status_perangkat');
+Route::get('/traffic_jaringan', 'LaporanController@traffic_jaringan')->name('laporan.traffic_jaringan');
+Route::get('/traffic_jaringan.perangkat', 'LaporanController@traffic_jaringan')->name('laporan.traffic_jaringan');
+// Route::get('id', 'LaporanController@traffic_jaringan')->name('laporan.traffic_jaringan');
 // Route::get('monitoring/grafik/suhu', 'DashboardController@grafikSuhu')->name('monitoring.grafik.suhu');
 // Route::get('/laporan/show', 'LaporanController@grafik_traffic')->name('laporan.show');
-Route::resource('laporan', 'LaporanController');
+
 
 // services general ajax
 Route::prefix('services')->group(function() {

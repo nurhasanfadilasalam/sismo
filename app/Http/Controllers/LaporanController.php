@@ -239,6 +239,21 @@ class LaporanController extends Controller
         $dif = strtotime($now)-strtotime($max);
         $hours = floor($dif / (60 * 60));
         $seconds = $dif - $hours * (60 * 60);
+
+        // $data_traffic_last = Traffic::pluck('nilai')
+        // ->where('keterangan', 'inoctet')
+        // ->orderBy('created_at','desc')->take(1)->get();
+
+        $data_traffic_last_inoctet = Traffic::select('nilai')
+            ->where([   ['keterangan', '=', 'inoctet'],])
+            ->latest('created_at')->first();
+
+        $data_traffic_last_outoctet = Traffic::select('nilai')
+            ->where([   ['keterangan', '=', 'outoctet'],])
+            ->latest('created_at')->first();    
+
+
+        // dd($data_traffic_last);
         
         //  untuk active halaman
         $halaman = "laporan";
@@ -250,9 +265,104 @@ class LaporanController extends Controller
             'suhu' => $new,
             'suhuu' => $new,
             'selisih' => $seconds,
-            'updatewaktu' =>$max
+            'updatewaktu' =>$max,
+            'data_traffic_last_inoctet' => $data_traffic_last_inoctet,
+            'data_traffic_last_outoctet' => $data_traffic_last_outoctet
         ]);
     }
+
+
+
+    public function traffic_jaringan(Request $request){
+
+
+        // nilai default
+        $filterPerangkat = 2;
+        // $filterPerangkat = $request->get('perangkat');
+
+        $datajumlah = Perangkat::count('id');
+
+     
+        // dd($perangkats);
+        // $perangkat = Perangkat::orderBy('id', 'asc');
+        // if ($request->has('perangkat')){
+        //     if (!empty($filterPerangkat)) {
+        //         $perangkat->where('id', $filterPerangkat);    
+                
+        //     }
+        // }
+    
+    // dd($filterPerangkat);            
+    //function grapik
+    $data_traffic1 = Traffic::select('nilai','created_at')
+        ->where([
+            ['keterangan', '=', 'inoctet'],
+            ['perangkat_id','=', $filterPerangkat],
+        ])
+        
+        ->orderBy('created_at','desc')->take(60)->get();
+    
+        $reversed1 = $data_traffic1->reverse();
+        $new10    = $reversed1->all();
+
+    $data_traffic2 = Traffic::select('nilai','created_at')
+         ->where([
+            ['keterangan', '=', 'outoctet'],
+            ['perangkat_id','=', $filterPerangkat],
+         ])
+        
+        ->orderBy('created_at','desc')->take(60)->get();
+    $reversed2 = $data_traffic2->reverse();
+    $new20    = $reversed2->all();
+
+    $max_date = Traffic::max('created_at');
+    $max = date('Y-m-d H:i:s',strtotime($max_date));
+    $now = date('Y-m-d H:i:s');
+    $dif = strtotime($now)-strtotime($max);
+    $hours = floor($dif / (60 * 60));
+    $seconds = $dif - $hours * (60 * 60);
+
+
+
+    $perangkatList = array();
+    $perangkatList = Perangkat::pluck('nama_perangkat','id');
+
+    // $perangkats = Perangkat::orderBy('id', 'asc');
+
+    //  untuk active halaman
+    $halaman = "laporan";
+
+    return view(
+        'laporan.traffic_jaringan',
+        [
+            'halaman' => $halaman, 
+            'datajumlah'=> $datajumlah, 
+            'traffic10' => $new10,
+            'traffic20' => $new20,
+            'traffics10' => $new10,
+            'traffics20' => $new20,
+            'selisih' => $seconds,
+            'updatewaktu' =>$max,
+            'filterPerangkat' =>$filterPerangkat,
+            
+            'perangkatList' =>$perangkatList,
+        ]
+
+        );
+    
+            
+        
+
+
+
+
+         
+
+    }
+
+
+
+    
 
     public function grafik_traffic()
     {
